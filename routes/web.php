@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MainController;
+use App\Http\Controllers\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,6 +20,9 @@ use App\Http\Controllers\MainController;
 // });
 Route::get('/', [MainController::class, 'index']);
 Route::get('/galery/{full_image}', [MainController::class, 'show']);
+
+Route::get('/registration', [AuthController::class, 'create']);
+Route::post('/auth/login', [AuthController::class, 'registration']);
 
 Route::get('/about', function () {
     return view('main/about');
