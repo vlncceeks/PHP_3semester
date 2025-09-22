@@ -34,12 +34,16 @@
                                 <li class="nav-item">
                                 <a class="nav-link active" aria-current="page" href="about">О нас</a>
                                 </li>
+                                </li> 
+                                <li class="nav-item">
+                                <a class="nav-link" href="/articles/show">Новости</a>
+                                </li>    
                                 <li class="nav-item">
                                 <a class="nav-link" href="contacts">Контакты</a>
                                 </li>   
                                 <li class="nav-item">
                                 <a class="nav-link" href="registration">Регистрация</a>
-                                </li>            
+                                           
                             </ul>
                             <!-- <form class="d-flex">
                                 <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
