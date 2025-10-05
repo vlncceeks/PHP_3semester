@@ -36,13 +36,16 @@
                                 </li>
                                 </li> 
                                 <li class="nav-item">
-                                <a class="nav-link" href="/articles/show">Новости</a>
+                                <a class="nav-link" href="/articles">Новости</a>
                                 </li>    
+                                <li class="nav-item">
+                                <a class="nav-link" href="/articles/create">Создать новость</a>
+                                </li>  
                                 <li class="nav-item">
                                 <a class="nav-link" href="contacts">Контакты</a>
                                 </li>   
                                 <li class="nav-item">
-                                <a class="nav-link" href="registration">Регистрация</a>
+                                <a class="nav-link" href="signup">Регистрация</a>
                                            
                             </ul>
                             <!-- <form class="d-flex">
