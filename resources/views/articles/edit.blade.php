@@ -1,7 +1,7 @@
 @extends('layout')
 
 @section('content')
-    <h2>Регистрация</h2>
+    <h2>Изменение статьи</h2>
     <form action="/articles/{{$article->id}}/" method="post">
         @csrf
         @method('PUT')
@@ -30,6 +30,6 @@
             <input type="checkbox" class="form-check-input" id="exampleCheck1">
             <label class="form-check-label" for="exampleCheck1">Check me out</label>
         </div> -->
-        <button type="submit" class="btn btn-primary">Отправить</button>
+        <button type="submit" class="btn btn-primary">Изменить</button>
     </form>
 @endsection

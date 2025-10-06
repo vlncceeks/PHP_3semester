@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\CommentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,6 +20,8 @@ use App\Http\Controllers\ArticleController;
 // Route::get('/', function () {
 //     return view('layout');
 // });
+
+Route::resource('articles.comments', CommentController::class);
 Route::resource('articles', ArticleController::class);
 
 // Route::group(['prefix'=>'/article'], function(){

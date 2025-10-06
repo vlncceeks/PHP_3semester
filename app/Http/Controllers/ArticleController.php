@@ -13,7 +13,7 @@ class ArticleController extends Controller
     public function index()
     {
         $articles = Article::latest()->paginate(5);
-        return view('articles/show', ['articles' => $articles]);
+        return view('articles/index', ['articles' => $articles]);
     }
 
     /**
@@ -50,7 +50,7 @@ class ArticleController extends Controller
      */
     public function show(Article $article)
     {
-        return view('articles/article', ['article' => $article]);
+        return view('articles/show', ['article' => $article]);
     }
 
     /**
