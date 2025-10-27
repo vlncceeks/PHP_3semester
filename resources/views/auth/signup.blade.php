@@ -2,7 +2,7 @@
 
 @section('content')
     <h2>Регистрация</h2>
-    <form action="auth/login" method="post">
+    <form action="/auth/registration" method="post">
         @csrf
         <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">Имя</label>
@@ -22,6 +22,6 @@
             <input type="checkbox" class="form-check-input" id="exampleCheck1">
             <label class="form-check-label" for="exampleCheck1">Check me out</label>
         </div> -->
-        <button type="submit" class="btn btn-primary">Отправить</button>
+        <button type="submit" class="btn btn-primary">Создать аккаунт</button>
     </form>
 @endsection

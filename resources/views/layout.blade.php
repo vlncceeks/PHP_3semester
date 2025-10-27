@@ -44,9 +44,19 @@
                                 <li class="nav-item">
                                 <a class="nav-link" href="contacts">Контакты</a>
                                 </li>   
+                                @guest
                                 <li class="nav-item">
-                                <a class="nav-link" href="signup">Регистрация</a>
-                                           
+                                <a class="nav-link" href="/auth/signup">Регистрация</a>
+                                </li>    
+                                <li class="nav-item">
+                                <a class="nav-link" href="/auth/login">Вход</a>
+                                </li>      
+                                @endguest
+                                @auth
+                                <li class="nav-item">
+                                <a class="nav-link" href="/auth/logout">Выход</a>
+                                </li> 
+                                @endauth        
                             </ul>
                             <!-- <form class="d-flex">
                                 <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">

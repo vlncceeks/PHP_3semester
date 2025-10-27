@@ -22,7 +22,7 @@ use App\Http\Controllers\CommentController;
 // });
 
 Route::resource('articles.comments', CommentController::class);
-Route::resource('articles', ArticleController::class);
+Route::resource('articles', ArticleController::class)->middleware('auth:sanctum');
 
 // Route::group(['prefix'=>'/article'], function(){
 //     Route::get('', [ArticleController::class, 'index']);
@@ -33,8 +33,14 @@ Route::resource('articles', ArticleController::class);
 Route::get('/', [MainController::class, 'index']);
 Route::get('/galery/{full_image}', [MainController::class, 'show']);
 
-Route::get('/signup', [AuthController::class, 'create']);
-Route::post('/auth/login', [AuthController::class, 'registration']);
+
+//Auth
+Route::get('/auth/signup', [AuthController::class, 'signup']);
+Route::post('/auth/registration', [AuthController::class, 'registration']);
+Route::get('/auth/login', [AuthController::class, 'login'])->name('login');
+Route::post('/auth/authenticate', [AuthController::class, 'authenticate']);
+Route::get('/auth/logout', [AuthController::class, 'logout']);
+
 
 Route::get('/about', function () {
     return view('main/about');
