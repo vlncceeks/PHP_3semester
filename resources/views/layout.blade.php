@@ -39,10 +39,10 @@
                                 <a class="nav-link" href="/articles">Новости</a>
                                 </li>    
                                 <li class="nav-item">
-                                <a class="nav-link" href="/articles/create">Создать новость</a>
-                                </li>  
-                                <li class="nav-item">
                                 <a class="nav-link" href="contacts">Контакты</a>
+                                </li> 
+                                <li class="nav-item">
+                                <a class="nav-link" href="/articles/create">Создать новость</a>
                                 </li>   
                                 @guest
                                 <li class="nav-item">
@@ -52,7 +52,7 @@
                                 <a class="nav-link" href="/auth/login">Вход</a>
                                 </li>      
                                 @endguest
-                                @auth
+                                @auth 
                                 <li class="nav-item">
                                 <a class="nav-link" href="/auth/logout">Выход</a>
                                 </li> 

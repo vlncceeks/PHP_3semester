@@ -8,6 +8,7 @@ use App\Models\Comment;
 use App\Models\Article;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CommentController extends Controller
 {
@@ -33,14 +34,16 @@ class CommentController extends Controller
      */
     public function store(Request $request, Article $article)
     {
+        $this->authorize('create', Comment::class);
         //return $request->json_decode();
         $request->validate([
             'text'=>'min:10|required',
         ]);
 
         $comment = new Comment;
-        $comment-> text = $request->text;
+        $comment->text = $request->text;
         $comment->articles_id = $article->id;
+        $comment->user_id = Auth::id();
         $comment->save();
 
         return redirect()->route('articles.show', $article)->with('message', "Comment add succesful");
@@ -59,6 +62,7 @@ class CommentController extends Controller
      */
     public function edit(Article $article, Comment $comment)
     {
+        $this->authorize('update', $comment);
         return view('comments/edit', ['article'=>$article, 'comment' => $comment]);
     }
 
@@ -67,6 +71,7 @@ class CommentController extends Controller
      */
     public function update(Request $request, Article $article, Comment $comment)
     {
+        $this->authorize('update', $comment);
         $request->validate([
             'text'=>'min:10|required',
         ]);
@@ -82,6 +87,7 @@ class CommentController extends Controller
      */
     public function destroy(Article $article, Comment $comment)
     {
+        $this->authorize('delete', $comment);
         $comment->delete();
         return redirect()->route('articles.show', $article)->with('message', 'Delete successful');
     }
