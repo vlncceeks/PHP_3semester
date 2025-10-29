@@ -9,6 +9,8 @@ use App\Models\Article;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\CommentMail;
 
 class CommentController extends Controller
 {
@@ -44,7 +46,8 @@ class CommentController extends Controller
         $comment->text = $request->text;
         $comment->articles_id = $article->id;
         $comment->user_id = Auth::id();
-        $comment->save();
+        $result = $comment->save();
+        if ($result) Mail::to(env("MAIL_TO_ADDRESS"))->send(new CommentMail($comment, $article->title));
 
         return redirect()->route('articles.show', $article)->with('message', "Comment add succesful");
     }
