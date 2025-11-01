@@ -1,23 +1,17 @@
-@extends('layout')
-@section('content')
-    <div class="card" style="min-width: 8rem; max-width: 170rem; margin: 2rem 0rem; ">
-        <div class="card-body">
-            <h5 class="card-title">Комментарий на статью "{{$article->title}}"</h5>
-            <p class="card-text">{{$comment->author_name}}</p>
-            <p class="card-text">{{$comment->text}}</p>
-            <div class="btn-toolbar mt-3" role="toolbar">
-                @can('update', $comment)
-                <a href="/articles/{{$article->id}}/comments/{{$comment->id}}/edit" class="btn btn-primary" style="margin-right: 1rem;">Изменить</a>
+    @foreach ($comments as $comment)
+            <div class="card-body">
+                <p class="card-text">{{$comment->author_name}}</p>
+                <p class="card-text">{{$comment->text}}</p>
+                @can('comment', $comment)
+                <div class="btn-toolbar mt-3" role="toolbar">
+                    <a href="/articles/{{$article->id}}/comments/{{$comment->id}}/edit" class="btn btn-outline-info" style="margin-right: 1rem;">Изменить</a>
+                   
+                    <form action="/articles/{{$article->id}}/comments/{{$comment->id}}" method="post">
+                        @METHOD("DELETE")
+                        @CSRF
+                        <button type="submit" class="btn btn-outline-danger">Удалить</button>
+                    </form>
+                </div> 
                 @endcan
-                @can('delete', $comment)
-                <form action="/articles/{{$article->id}}/comments/{{$comment->id}}" method="post">
-                    @METHOD("DELETE")
-                    @CSRF
-                    <button type="submit" class="btn btn-primary">Удалить</button>
-                </form>
-                @endcan
-            </div> 
-            
-        </div>
-    </div>
-@endsection
+            </div>
+    @endforeach

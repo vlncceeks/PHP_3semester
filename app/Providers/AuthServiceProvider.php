@@ -6,7 +6,9 @@ namespace App\Providers;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 use App\Models\User;
+use App\Models\Comment;
 use Illuminate\Auth\Access\Response;
+use Illuminate\Auth\Access\AuthorizationException;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -16,8 +18,8 @@ class AuthServiceProvider extends ServiceProvider
      * @var array<class-string, class-string>
      */
     protected $policies = [
-        Article::class => ArticlePolicy::class,
-        Comment::class => CommentPolicy::class,
+        // Article::class => ArticlePolicy::class,
+        // Comment::class => CommentPolicy::class,
     ];
 
     /**
@@ -25,12 +27,21 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        $this->registerPolicies();
+        // $this->registerPolicies();
+        
+        Gate::define('article', function (User $user){
+            if ($user->role_id == 1)
+                return true;
 
-        // Gate::define('article', function (User $user){
-        //     return $user->role_id == 1
-        //     ? Response::allow()
-        //     : Response::deny('You don`t moderator');
-        // });
+            throw new AuthorizationException('You don`t moderator');
+        });
+
+        Gate::define('comment', function(User $user, Comment $comment){
+            if ($user->id == $comment->user_id || $user->role_id == 1)
+                return true;
+
+            throw new AuthorizationException('You can`t edit or delete this comment');
+        });
+        
     }
 }

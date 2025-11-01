@@ -1,18 +1,34 @@
-    @foreach ($article->comments as $comment)
-            <div class="card-body">
-                <p class="card-text">{{$comment->author_name}}</p>
-                <p class="card-text">{{$comment->text}}</p>
-                <div class="btn-toolbar mt-3" role="toolbar">
-                    @can('update', $comment)
-                    <a href="/articles/{{$article->id}}/comments/{{$comment->id}}/edit" class="btn btn-outline-info" style="margin-right: 1rem;">Изменить</a>
-                    @endcan
-                    @can('delete', $comment)
-                    <form action="/articles/{{$article->id}}/comments/{{$comment->id}}" method="post">
-                        @METHOD("DELETE")
-                        @CSRF
-                        <button type="submit" class="btn btn-outline-danger">Удалить</button>
-                    </form>
-                    @endcan
-                </div> 
-            </div>
-    @endforeach
+@extends('layout')
+
+@section('content')
+    <h2>Комментари</h2>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Date</th>
+                <th scope="col">Author</th>
+                <th scope="col">Article</th>
+                <th scope="col">Text</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($comments as $comment)
+                <tr>
+                    <th scope="row">{{ $comment->created_at }}</th>
+                    <td>{{App\Models\User::FindOrFail($comment->user_id)->name}}</td>
+                    <td><a href="articles/{{App\Models\Article::FindOrFail($comment->articles_id)->id}}">{{App\Models\Article::FindOrFail($comment->articles_id)->title}}</a></td>
+                    <td>{{$comment->text}}</td>
+                    <td>
+                        @if(!$comment->accept)  
+                            <a href="/comments/accept/{{$comment->id}}" class="btn btn-primary">Accept</a>
+                        @else
+                            <a href="/comments/reject/{{$comment->id}}" class="btn btn-warning">Reject</a>
+                        @endif
+                    </td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
+@endsection

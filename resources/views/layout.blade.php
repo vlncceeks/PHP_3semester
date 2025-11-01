@@ -41,9 +41,14 @@
                                 <li class="nav-item">
                                 <a class="nav-link" href="contacts">Контакты</a>
                                 </li> 
+                                @can('article')
                                 <li class="nav-item">
                                 <a class="nav-link" href="/articles/create">Создать новость</a>
                                 </li>   
+                                <li class="nav-item">
+                                <a class="nav-link" href="/comments">Модерация комментариев</a>
+                                </li>
+                                @endcan
                                 @guest
                                 <li class="nav-item">
                                 <a class="nav-link" href="/auth/signup">Регистрация</a>

@@ -21,9 +21,12 @@ use App\Http\Controllers\CommentController;
 //     return view('layout');
 // });
 
+Route::get('/comments/accept/{comment}', [CommentController::class, 'accept']);
+Route::get('/comments/reject/{comment}', [CommentController::class, 'reject']);
+Route::get('/comments', [CommentController::class, 'index']);
 Route::resource('articles.comments', CommentController::class);
-Route::resource('articles', ArticleController::class)->middleware('auth:sanctum');
 
+Route::resource('articles', ArticleController::class)->middleware('auth:sanctum');
 // Route::group(['prefix'=>'/article'], function(){
 //     Route::get('', [ArticleController::class, 'index']);
 //     Route::get('/create', [ArticleController::class, 'create']);

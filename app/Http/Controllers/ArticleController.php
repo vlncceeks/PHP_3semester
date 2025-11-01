@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ArticleMail;
 
+use Illuminate\Support\Facades\Gate;
+
 class ArticleController extends Controller
 {
     /**
@@ -23,7 +25,7 @@ class ArticleController extends Controller
      */
     public function create()
     {
-        $this->authorize('create', [Article::class]);
+        Gate::authorize('article', Article::class);
         return view('articles.create');
     }
 
@@ -54,7 +56,8 @@ class ArticleController extends Controller
      */
     public function show(Article $article)
     {
-        return view('articles/show', ['article' => $article]);
+        $comments = $article->comments->where('accept', 1);
+        return view('articles/show', ['article' => $article, 'comments' => $comments]);
     }
 
     /**

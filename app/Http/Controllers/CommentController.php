@@ -11,16 +11,17 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\CommentMail;
+use Illuminate\Support\Facades\Gate;
 
 class CommentController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(Article $article)
+    public function index()
     {
-        $comments = $article->comments()->latest()->paginate(3);
-        return view('comments/index', ['article' => $article, 'comments' => $comments]);
+        $comments = Comment::latest()->get();
+        return view('comments/index', ['comments' => $comments]);
     }
 
     /**
@@ -49,15 +50,16 @@ class CommentController extends Controller
         $result = $comment->save();
         if ($result) Mail::to(env("MAIL_TO_ADDRESS"))->send(new CommentMail($comment, $article->title));
 
-        return redirect()->route('articles.show', $article)->with('message', "Comment add succesful");
+        return redirect()->route('articles.show', $article)->with('message', "Comment add succesful and enter for moderation.");
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Article $article, Comment $comment)
+    public function show(Article $article)
     {
-        return view('comments/show', ['article' => $article, 'comment' => $comment]);
+        $comments = $article->comments()->latest()->paginate(3);
+        return view('comments/show', ['article' => $article, 'comments' => $comments]);
     }
 
     /**
@@ -93,5 +95,18 @@ class CommentController extends Controller
         $this->authorize('delete', $comment);
         $comment->delete();
         return redirect()->route('articles.show', $article)->with('message', 'Delete successful');
+    }
+
+    public function accept(Comment $comment){
+        $comment->accept = true;
+        $comment->save();
+        $article = Article::FindOrFail($comment->articles_id);
+        return redirect()->route('articles.show', $article)->with('message', 'Accept successful');
+    }
+    public function reject(Comment $comment){
+        $comment->accept = false;
+        $comment->save();
+        $article = Article::FindOrFail($comment->articles_id);
+        return redirect()->route('articles.show', $article)->with('message', 'Reject successful');
     }
 }
